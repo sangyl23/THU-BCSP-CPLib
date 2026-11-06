@@ -1,0 +1,14 @@
+﻿# Python 缓存
+__pycache__/
+*.py[cod]
+
+# 大型评估结果，所有子目录均排除
+eval_result_92mats.mat
+
+# 数据集仅保留目录占位文件
+/project_Dformer/QuaDRiGa/*
+!/project_Dformer/QuaDRiGa/.gitkeep
+/project_Dformer/DeepMIMO/*
+!/project_Dformer/DeepMIMO/.gitkeep
+/project_Dformer/Industrial_Radio/*
+!/project_Dformer/Industrial_Radio/.gitkeep
