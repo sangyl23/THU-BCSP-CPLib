@@ -183,19 +183,3 @@ project_Dformer/checkpoint/model_comparison/QuaDRiGa/Dformer/eval_result_92mats.
 ```
 
 The MATLAB file contains `nmse_eval`, `sgcs_eval`, `se_eval`, `pre_nodes`, and `gt_nodes`. The script also writes `logfile.txt` in the selected `--saved_path`. Re-running an evaluation overwrites these output files. Large `eval_result_92mats.mat` files are excluded from the published artifacts and regenerated locally during evaluation.
-
-For the grouped cyclic port-estimation comparison at the same group sizes, use the identical command from Section 3 but replace:
-
-```text
---saved_path checkpoint/model_comparison/QuaDRiGa/Dformer/
-```
-
-with:
-
-```text
---saved_path checkpoint/port_estimation_mode/nmse/grouped_cyclic_angle_delay/SD1of2_FD1of2/
-```
-
-This matches the corresponding `running_eval.txt`; the checkpoint name and remaining arguments are the same for this example.
-
-For other configurations, use the `running_eval.txt` next to the desired checkpoint as the source of model, grouping, metric, and data-path arguments. Keep the architecture parameters consistent with the selected `.pth` file, and confirm that its test data are available before running. A checkpoint directory may also contain historical `running.txt` training commands; these are not part of the evaluation workflow in this release.
