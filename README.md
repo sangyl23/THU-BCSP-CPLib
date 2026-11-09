@@ -2,7 +2,7 @@
 
 **Hugging Face downloads:** [Test dataset](https://huggingface.co/datasets/sangyl23/THU_BCSP_CPLib/tree/main/project_Dformer/QuaDRiGa) | [Checkpoints and evaluation commands](https://huggingface.co/datasets/sangyl23/THU_BCSP_CPLib/tree/main/project_Dformer/checkpoint) | [Full artifact repository](https://huggingface.co/datasets/sangyl23/THU_BCSP_CPLib)
 
-PyTorch implementation accompanying **Doppler-Domain Transformer-Based Channel Prediction with Grouped Cyclic Port Estimation** This release provides evaluation code, a QuaDRiGa test dataset, and pretrained checkpoints. Large artifacts are hosted on Hugging Face and downloaded separately from the GitHub source code.
+PyTorch implementation accompanying **Doppler-Domain Transformer-Based Channel Prediction with Grouped Cyclic Port Estimation** This release provides evaluation code, a QuaDRiGa test dataset, and pretrained checkpoints.
 
 > **Release schedule:** The training datasets, training-data generation code, and Python training scripts will be released immediately after the paper receives a major-revision decision. This README describes evaluation with pretrained checkpoints only; no training dataset is required for the example below.
 
