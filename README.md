@@ -112,8 +112,6 @@ If you are interested in other models and port estimation methods, you can find 
 
 ## 4. Parameters instruction
 
-The values below describe the command in Section 3, rather than the parser defaults. Keep model architecture and port-grouping settings consistent with the selected checkpoint.
-
 ### Channel, data, and port estimation
 
 | Argument | Example value | Meaning |
