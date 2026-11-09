@@ -108,7 +108,7 @@ Important path and argument conventions:
 - The inherited `--path_train`, `--training_data`, `--epoch_num`, and learning-rate arguments are retained from the recorded command. They do not trigger training; `eval_cplib.py` constructs only the evaluation loader. In particular, `92mats` is a training-run label, not a requirement to download a training set.
 - The original `running_eval.txt` files use Bash-style `\` line continuation. On Windows, use the single-line command above, or join the lines before executing. Do not paste the multiline Bash form directly into PowerShell or Anaconda Prompt.
 
-If you are interested in other models and port estimation methods, you can find the corresponding commands from `checkpoint`. For example, for `Transformer`,   
+If you are interested in other models and port estimation methods, you can find the corresponding commands from `checkpoint`. For example, for model `Transformer`, you can find the command from `checkpoint/model_comparison/QuaDRiGa/Transformer/running_eval.txt`. For port estimation method `Partial strongest port`, you can find the command from `checkpoint/port_estimation_mode/nmse/partial_strong/SD1of2_FD1of2/running_eval.txt`.
 
 ## 4. Evaluation command parameters
 
