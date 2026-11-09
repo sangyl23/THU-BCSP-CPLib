@@ -110,7 +110,7 @@ Important path and argument conventions:
 
 If you are interested in other models and port estimation methods, you can find the corresponding commands from `checkpoint`. For example, for model `Transformer`, you can find the command from `checkpoint/model_comparison/QuaDRiGa/Transformer/running_eval.txt`. For port estimation method `Partial strongest port`, you can find the command from `checkpoint/port_estimation_mode/nmse/partial_strong/SD1of2_FD1of2/running_eval.txt`.
 
-## 4. Evaluation command parameters
+## 4. Parameters instruction
 
 The values below describe the command in Section 3, rather than the parser defaults. Keep model architecture and port-grouping settings consistent with the selected checkpoint.
 
