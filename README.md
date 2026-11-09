@@ -98,7 +98,13 @@ The following command is adapted from `checkpoint/model_comparison/QuaDRiGa/Dfor
 python eval_cplib.py --model_name Dformer --channel_type QuaDRiGa --v 40kmh --interval 1en3 --snr 20dB --UE_num 4 --RB_num 8 --M 32 --M_h 8 --M_v 2 --seq_len 64 --pred_len 8 --label_len 32 --t0 64 --read_uplink False --path_train QuaDRiGa/process_v40kmh_1en3_his64_pre8/train_ULsnr10dB_DLsnr20dB --path_eval QuaDRiGa/process_v40kmh_1en3_his64_pre8/test_ULsnr10dB_DLsnr20dB --port_estimation_mode grouped_cyclic_angle_delay --RB_within_group 4 --M_within_group 16 --training_data 92mats --epoch_num 300 --batch_size 16 --gpu cuda:0 --multi_gpu False --cuda_devices 0,1,2,3 --loss_function NMSE --lr 5e-4 --seed 1 --evaluate_sgcs True --evaluate_se True --saved_path checkpoint/model_comparison/QuaDRiGa/Dformer/ --input_mechanism Channel_mixing --instance_norm wo --ifAD True --task_name long_term_forecast --enc_in 128 --dec_in 128 --c_out 128 --e_layers 3 --d_layers 0 --d_model 128 --d_ff 64 --ifemb_conditions False --emb_module temporal_emb --embed_learning doppler --doppler_keep_ratio 0.6 --checkpoint_name Dformer_QuaDRiGa_v40kmh_interval1en392mats_snr20dB_tt0
 ```
 
-This loads the pretrained Dformer checkpoint and evaluates grouped cyclic angle-delay port estimation with `RB_within_group=4` and `M_within_group=16` (four groups for eight RBs and 32 antenna ports). NMSE, SGCS, and SE evaluation are enabled.
+This loads the pretrained Dformer checkpoint and evaluates grouped cyclic angle-delay port estimation with `RB_within_group=4` and `M_within_group=16` (four groups for eight RBs and 32 antenna ports). NMSE, SGCS, and SE evaluation are enabled. The example writes:
+
+```text
+project_Dformer/checkpoint/model_comparison/QuaDRiGa/Dformer/eval_result_92mats.mat
+```
+
+The MATLAB file contains `nmse_eval`, `sgcs_eval`, `se_eval`, `pre_nodes`, and `gt_nodes`. The script also writes `logfile.txt` in the selected `--saved_path`. Re-running an evaluation overwrites these output files. Large `eval_result_92mats.mat` files are excluded from the published artifacts and regenerated locally during evaluation.
 
 Important path and argument conventions:
 
@@ -173,13 +179,3 @@ Arguments omitted from the command use the defaults in `configs/dformer_paramete
 | `--lr` | `5e-4` | Historical learning rate; no optimizer updates run during evaluation. |
 | `--saved_path` | `checkpoint/model_comparison/QuaDRiGa/Dformer/` | Directory for loading weights and writing results/logs. Must exist and end in `/`. |
 | `--checkpoint_name` | `Dformer_QuaDRiGa_v40kmh_interval1en392mats_snr20dB_tt0` | Checkpoint basename without `.pth`. |
-
-## 5. Inspect results and run another evaluation
-
-The example writes:
-
-```text
-project_Dformer/checkpoint/model_comparison/QuaDRiGa/Dformer/eval_result_92mats.mat
-```
-
-The MATLAB file contains `nmse_eval`, `sgcs_eval`, `se_eval`, `pre_nodes`, and `gt_nodes`. The script also writes `logfile.txt` in the selected `--saved_path`. Re-running an evaluation overwrites these output files. Large `eval_result_92mats.mat` files are excluded from the published artifacts and regenerated locally during evaluation.
