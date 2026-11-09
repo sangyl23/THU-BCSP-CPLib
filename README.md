@@ -2,7 +2,7 @@
 
 **Hugging Face downloads:** [Test dataset](https://huggingface.co/datasets/sangyl23/THU_BCSP_CPLib/tree/main/project_Dformer/QuaDRiGa) | [Checkpoints and evaluation commands](https://huggingface.co/datasets/sangyl23/THU_BCSP_CPLib/tree/main/project_Dformer/checkpoint) | [Full artifact repository](https://huggingface.co/datasets/sangyl23/THU_BCSP_CPLib)
 
-PyTorch implementation accompanying **Doppler-Domain Transformer-Based Channel Prediction with Grouped Cyclic Port Estimation** This release provides evaluation code, a QuaDRiGa test dataset, and pretrained checkpoints.
+PyTorch implementation accompanying **Doppler-Domain Transformer-Based Channel Prediction with Grouped Cyclic Port Estimation** This release provides evaluation code, a QuaDRiGa test dataset, and pretrained checkpoints. Large artifacts are hosted on Hugging Face and downloaded separately from the GitHub source code.
 
 > **Release schedule:** The training datasets, training-data generation code, and Python training scripts will be released immediately after the paper receives a major-revision decision. This README describes evaluation with pretrained checkpoints only; no training dataset is required for the example below.
 
@@ -21,11 +21,33 @@ git clone https://github.com/sangyl23/THU_BCSP_CPLib.git
 cd THU_BCSP_CPLib
 conda create -n cplib python=3.11.14 pip=25.3 -y
 conda activate cplib
+```
+
+Install **PyTorch 2.5.1 with CUDA 12.1** separately before installing the remaining dependencies:
+
+```bat
+REM Adjust the CUDA build to match your NVIDIA GPU and driver compatibility.
+python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+```
+
+CUDA 12.1 is the example GPU configuration, not a CUDA version detected in the original local environment: that environment used PyTorch 2.5.1 CPU. PyTorch 2.5.1 also provides CUDA 11.8 and 12.4 builds (`cu118` and `cu124`). Select the appropriate build for your GPU and NVIDIA driver using the [official PyTorch installation commands](https://pytorch.org/get-started/previous-versions/#v251). The pip wheel includes the CUDA runtime dependencies required by PyTorch; a separate system CUDA Toolkit is normally unnecessary for this evaluation, but a compatible NVIDIA driver is required.
+
+Then install the remaining packages, pinned from the local `cplib` environment:
+
+```bat
 python -m pip install -r requirements.txt
 python -m pip check
 ```
 
-The pinned dependency file snapshots a Windows x86-64 / Python 3.11.14 environment with PyTorch 2.5.1 (CPU). The example below explicitly uses CPU and may take substantially longer than GPU evaluation. For CUDA evaluation, install the corresponding official CUDA-enabled PyTorch 2.5.1 build for your hardware and change `--gpu cpu` to `--gpu cuda:0`. A CUDA installation changes the CPU environment snapshot. Other platforms have not been validated with this dependency file.
+`requirements.txt` retains `torch==2.5.1` as a version constraint so that dependent packages use the same PyTorch release. It accepts the already installed `2.5.1+cu121` build and does not require reinstalling the CPU build. Installing PyTorch first selects the CUDA variant explicitly.
+
+Verify GPU availability before evaluation:
+
+```bat
+python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA runtime:', torch.version.cuda); print('CUDA available:', torch.cuda.is_available())"
+```
+
+For the example installation, expect `2.5.1+cu121`, CUDA runtime `12.1`, and `CUDA available: True`. If availability is `False`, check your NVIDIA driver and PyTorch build before proceeding. The original dependency snapshot targets Windows x86-64 / Python 3.11.14; this CUDA variant and other platforms have not been validated locally.
 
 ## 2. Download the test dataset and checkpoints
 
@@ -83,10 +105,10 @@ Switch to the evaluation working directory:
 cd project_Dformer
 ```
 
-The following command is adapted from `checkpoint/model_comparison/QuaDRiGa/Dformer/running_eval.txt`, with the device changed to CPU. **Copy it as a single line** in Anaconda Prompt or PowerShell:
+The following command is adapted from `checkpoint/model_comparison/QuaDRiGa/Dformer/running_eval.txt`, using the first CUDA device (`cuda:0`). **Copy it as a single line** in Anaconda Prompt or PowerShell:
 
 ```text
-python eval_cplib.py --model_name Dformer --channel_type QuaDRiGa --v 40kmh --interval 1en3 --snr 20dB --UE_num 4 --RB_num 8 --M 32 --M_h 8 --M_v 2 --seq_len 64 --pred_len 8 --label_len 32 --t0 64 --read_uplink False --path_train QuaDRiGa/process_v40kmh_1en3_his64_pre8/train_ULsnr10dB_DLsnr20dB --path_eval QuaDRiGa/process_v40kmh_1en3_his64_pre8/test_ULsnr10dB_DLsnr20dB --port_estimation_mode grouped_cyclic_angle_delay --RB_within_group 4 --M_within_group 16 --training_data 92mats --epoch_num 300 --batch_size 16 --gpu cpu --multi_gpu False --cuda_devices 0,1,2,3 --loss_function NMSE --lr 5e-4 --seed 1 --evaluate_sgcs True --evaluate_se True --saved_path checkpoint/model_comparison/QuaDRiGa/Dformer/ --input_mechanism Channel_mixing --instance_norm wo --ifAD True --task_name long_term_forecast --enc_in 128 --dec_in 128 --c_out 128 --e_layers 3 --d_layers 0 --d_model 128 --d_ff 64 --ifemb_conditions False --emb_module temporal_emb --embed_learning doppler --doppler_keep_ratio 0.6 --checkpoint_name Dformer_QuaDRiGa_v40kmh_interval1en392mats_snr20dB_tt0
+python eval_cplib.py --model_name Dformer --channel_type QuaDRiGa --v 40kmh --interval 1en3 --snr 20dB --UE_num 4 --RB_num 8 --M 32 --M_h 8 --M_v 2 --seq_len 64 --pred_len 8 --label_len 32 --t0 64 --read_uplink False --path_train QuaDRiGa/process_v40kmh_1en3_his64_pre8/train_ULsnr10dB_DLsnr20dB --path_eval QuaDRiGa/process_v40kmh_1en3_his64_pre8/test_ULsnr10dB_DLsnr20dB --port_estimation_mode grouped_cyclic_angle_delay --RB_within_group 4 --M_within_group 16 --training_data 92mats --epoch_num 300 --batch_size 16 --gpu cuda:0 --multi_gpu False --cuda_devices 0,1,2,3 --loss_function NMSE --lr 5e-4 --seed 1 --evaluate_sgcs True --evaluate_se True --saved_path checkpoint/model_comparison/QuaDRiGa/Dformer/ --input_mechanism Channel_mixing --instance_norm wo --ifAD True --task_name long_term_forecast --enc_in 128 --dec_in 128 --c_out 128 --e_layers 3 --d_layers 0 --d_model 128 --d_ff 64 --ifemb_conditions False --emb_module temporal_emb --embed_learning doppler --doppler_keep_ratio 0.6 --checkpoint_name Dformer_QuaDRiGa_v40kmh_interval1en392mats_snr20dB_tt0
 ```
 
 This loads the pretrained Dformer checkpoint and evaluates grouped cyclic angle-delay port estimation with `RB_within_group=4` and `M_within_group=16` (four groups for eight RBs and 32 antenna ports). NMSE, SGCS, and SE evaluation are enabled.
@@ -152,7 +174,7 @@ Arguments omitted from the command use the defaults in `configs/dformer_paramete
 | Argument | Example value | Meaning |
 | --- | --- | --- |
 | `--batch_size` | `16` | Evaluation batch size; reduce it if memory is insufficient. |
-| `--gpu` | `cpu` | Compute device. Use `cuda:0` with a compatible CUDA-enabled PyTorch installation. |
+| `--gpu` | `cuda:0` | First visible NVIDIA GPU. Requires a compatible CUDA-enabled PyTorch installation; adjust the device index for your hardware. |
 | `--multi_gpu` | `False` | Shared training-interface flag; this evaluation script does not enable multi-GPU execution. |
 | `--cuda_devices` | `0,1,2,3` | Shared training-interface device-list argument; it does not select evaluation devices. Evaluation uses `--gpu`. |
 | `--seed` | `1` | Seed for Python, NumPy, and PyTorch random-number generators. |

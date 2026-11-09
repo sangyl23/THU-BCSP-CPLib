@@ -2,13 +2,17 @@
 # Recreate in Anaconda Prompt:
 #   conda create -n cplib_repro python=3.11.14 pip=25.3 -y
 #   conda activate cplib_repro
+#   python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 #   python -m pip install -r requirements.txt
 #   python -m pip check
 # All installed distributions, including transitive dependencies, are pinned.
 # pip is pinned by conda above; its original freeze entry was a nonportable
 # Conda build-machine file:// path and must not be copied here.
-# torch==2.5.1 reproduces the current Windows CPU installation (runtime reports
-# 2.5.1+cpu). CUDA/GPU builds require a different PyTorch installation.
+# The original local environment used torch 2.5.1+cpu. The command above
+# selects the CUDA 12.1 build for GPU evaluation; adjust the CUDA build for
+# your NVIDIA GPU and driver (see README). This variant was not tested locally.
+# torch==2.5.1 accepts an already installed 2.5.1+cu121 build and preserves it.
+# For CPU-only reproduction, omit the separate CUDA PyTorch install command.
 # This file does not install Python, Conda native libraries, GPU drivers,
 # external archive tools used by patool, datasets, or model checkpoints.
 # Other operating systems / Python versions are not covered by this snapshot.
