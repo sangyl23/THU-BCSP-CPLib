@@ -26,11 +26,10 @@ conda activate cplib
 Install **PyTorch 2.5.1 with CUDA 12.1** separately before installing the remaining dependencies:
 
 ```bat
-REM Adjust the CUDA build to match your NVIDIA GPU and driver compatibility.
 python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 ```
 
-CUDA 12.1 is the example GPU configuration, not a CUDA version detected in the original local environment: that environment used PyTorch 2.5.1 CPU. PyTorch 2.5.1 also provides CUDA 11.8 and 12.4 builds (`cu118` and `cu124`). Select the appropriate build for your GPU and NVIDIA driver using the [official PyTorch installation commands](https://pytorch.org/get-started/previous-versions/#v251). The pip wheel includes the CUDA runtime dependencies required by PyTorch; a separate system CUDA Toolkit is normally unnecessary for this evaluation, but a compatible NVIDIA driver is required.
+CUDA 12.1 is the example GPU configuration, you can select the appropriate build for your GPU and NVIDIA driver using the [official PyTorch installation commands](https://pytorch.org/get-started/previous-versions/#v251).
 
 Then install the remaining packages, pinned from the local `cplib` environment:
 
