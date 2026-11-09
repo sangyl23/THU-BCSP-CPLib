@@ -152,7 +152,7 @@ If you are interested in other models and port estimation methods, you can find 
 | `--ifemb_conditions` | `False` | Disables additional speed/sampling-interval condition embeddings. |
 | `--emb_module` | `temporal_emb` | Embeds each channel variable along its temporal dimension. |
 | `--embed_learning` | `doppler` | Enables Doppler-domain processing. |
-| `--doppler_keep_ratio` | `0.6` | Fraction used to determine the retained Doppler components in Dopplercut. |
+| `--doppler_keep_ratio` | `0.6` | Fraction used to determine the reserving ratio of Doppler spectrum in Dopplercut. |
 
 Arguments omitted from the command use the defaults in `configs/dformer_parameters_setup.py`, including `--dropout 0.08`, `--n_heads 8`, and `--doppler_before_embedding False`. Evaluation disables dropout through `model.eval()`.
 
