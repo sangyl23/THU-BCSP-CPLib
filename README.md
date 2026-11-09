@@ -39,7 +39,7 @@ python -m pip install -r requirements.txt
 
 ## 2. Download the test dataset and checkpoints
 
-Run the following commands **from the repository root**, in the activated `cplib` environment. They use `huggingface_hub`, which is already included in `requirements.txt`; public downloads do not require login.
+Run the following commands **from the repository root**, in the activated `cplib` environment.
 
 Download the released test split:
 
@@ -52,8 +52,6 @@ Download the checkpoint directory, including `.pth` weights, configurations reco
 ```bat
 python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='sangyl23/THU_BCSP_CPLib', repo_type='dataset', allow_patterns=['project_Dformer/checkpoint/**'], local_dir='.')"
 ```
-
-`local_dir='.'` preserves the paths stored on Hugging Face. Do not download from inside `project_Dformer`, as this would create an extra nested `project_Dformer` directory. The resulting layout should be:
 
 ```text
 THU_BCSP_CPLib/
