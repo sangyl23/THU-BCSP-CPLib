@@ -53,7 +53,7 @@ Download the checkpoint directory, including `.pth` weights, configurations reco
 python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='sangyl23/THU_BCSP_CPLib', repo_type='dataset', allow_patterns=['project_Dformer/checkpoint/**'], local_dir='.')"
 ```
 
-project structure
+Project structure:
 ```text
 THU_BCSP_CPLib/
 |-- README.md
