@@ -35,18 +35,7 @@ Then install the remaining packages, pinned from the local `cplib` environment:
 
 ```bat
 python -m pip install -r requirements.txt
-python -m pip check
 ```
-
-`requirements.txt` retains `torch==2.5.1` as a version constraint so that dependent packages use the same PyTorch release. It accepts the already installed `2.5.1+cu121` build and does not require reinstalling the CPU build. Installing PyTorch first selects the CUDA variant explicitly.
-
-Verify GPU availability before evaluation:
-
-```bat
-python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA runtime:', torch.version.cuda); print('CUDA available:', torch.cuda.is_available())"
-```
-
-For the example installation, expect `2.5.1+cu121`, CUDA runtime `12.1`, and `CUDA available: True`. If availability is `False`, check your NVIDIA driver and PyTorch build before proceeding. The original dependency snapshot targets Windows x86-64 / Python 3.11.14; this CUDA variant and other platforms have not been validated locally.
 
 ## 2. Download the test dataset and checkpoints
 
